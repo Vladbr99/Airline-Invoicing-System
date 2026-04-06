@@ -1,0 +1,19 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<h1>Create Invoice</h1>
+
+<form method="POST">
+    {% csrf_token %}
+
+    <label>Select Customer:</label><br>
+    <select name="customer">
+        {% for customer in customers %}
+        <option value="{{ customer.id }}">{{ customer.name }}</option>
+        {% endfor %}
+    </select>
+
+    <br><br>
+    <button type="submit">Create Invoice</button>
+</form>
+{% endblock %}

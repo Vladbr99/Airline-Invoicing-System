@@ -1,0 +1,20 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<h2>Update Invoice Status</h2>
+
+<form method="POST">
+    {% csrf_token %}
+
+    <div class="mb-3">
+        <label>Status</label>
+        <select name="status" class="form-control">
+            <option value="Pending">Pending</option>
+            <option value="Paid">Paid</option>
+            <option value="Cancelled">Cancelled</option>
+        </select>
+    </div>
+
+    <button class="btn btn-warning">Update</button>
+</form>
+{% endblock %}

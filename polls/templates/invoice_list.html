@@ -1,0 +1,30 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<h1>Invoices</h1>
+
+<table border="1" cellpadding="5">
+    <tr>
+        <th>ID</th>
+        <th>Customer</th>
+        <th>Status</th>
+        <th>Total</th>
+        <th>Actions</th>
+    </tr>
+
+    {% for invoice in invoices %}
+    <tr>
+        <td>{{ invoice.id }}</td>
+        <td>{{ invoice.customer.name }}</td>
+        <td>{{ invoice.status }}</td>
+        <td>{{ invoice.total }}</td>
+        <td>
+            <a href="/invoices/{{ invoice.id }}/add-item/">Add Item</a> |
+            <a href="/invoices/{{ invoice.id }}/update-status/">Update Status</a>
+        </td>
+    </tr>
+    {% endfor %}
+</table>
+
+<a href="{% url 'create_invoice' %}" class="btn btn-primary">Create New Invoice</a>
+{% endblock %}

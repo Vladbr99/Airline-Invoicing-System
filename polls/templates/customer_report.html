@@ -1,0 +1,40 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<h2>Customer Invoice Report</h2>
+
+<form method="POST">
+    {% csrf_token %}
+    <div class="mb-3">
+        <label>Select Customer</label>
+        <select name="customer" class="form-control">
+            {% for customer in customers %}
+            <option value="{{ customer.id }}">{{ customer.name }}</option>
+            {% endfor %}
+        </select>
+    </div>
+
+    <button class="btn btn-primary">View Report</button>
+</form>
+
+{% if invoices %}
+<h3 class="mt-4">Invoices</h3>
+<table class="table table-bordered bg-white">
+    <tr>
+        <th>ID</th>
+        <th>Status</th>
+        <th>Total</th>
+        <th>Date</th>
+    </tr>
+
+    {% for invoice in invoices %}
+    <tr>
+        <td>{{ invoice.id }}</td>
+        <td>{{ invoice.status }}</td>
+        <td>€{{ invoice.total }}</td>
+        <td>{{ invoice.date }}</td>
+    </tr>
+    {% endfor %}
+</table>
+{% endif %}
+{% endblock %}

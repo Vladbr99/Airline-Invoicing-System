@@ -1,0 +1,27 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<h2>Add Item to Invoice #{{ invoice.id }}</h2>
+
+<form method="POST">
+    {% csrf_token %}
+
+    <div class="mb-3">
+        <label>Select Flight</label>
+        <select name="flight" class="form-control">
+            {% for flight in flights %}
+            <option value="{{ flight.id }}">
+                {{ flight.flight_number }} - {{ flight.origin }} → {{ flight.destination }} (€{{ flight.base_price }})
+            </option>
+            {% endfor %}
+        </select>
+    </div>
+
+    <div class="mb-3">
+        <label>Quantity</label>
+        <input type="number" name="quantity" class="form-control" value="1" min="1">
+    </div>
+
+    <button class="btn btn-success">Add Item</button>
+</form>
+{% endblock %}
