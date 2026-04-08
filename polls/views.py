@@ -1,26 +1,40 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth.decorators import login_required
-from .models import Customer, Flight, Invoice, InvoiceItem, UserProfile
 from django.contrib.auth import authenticate, login
+from .models import Customer, Flight, Invoice, InvoiceItem, UserProfile
+from django.contrib.auth import logout
 
-#Role
+# Role helper
 def user_has_role(user, role_name):
+    # Admin override
+    if user.username == "Admin":
+        return True
+
     return hasattr(user, 'userprofile') and user.userprofile.role == role_name
 
-# Login
+# LOGIN
 def login_view(request):
     if request.method == 'POST':
         username = request.POST.get('username')
         password = request.POST.get('password')
         user = authenticate(request, username=username, password=password)
+
         if user:
             login(request, user)
-            return redirect('/')
+            return redirect('invoice_list')
+
         return render(request, 'login.html', {'error': 'Invalid username or password'})
+
     return render(request, 'login.html')
 
+# LOGOUT
+@login_required
+def logout_view(request):
+    logout(request)
+    return redirect('login')
 
-# 1. View all invoices (everyone can view)
+
+# 1. View all invoices (Everyone)
 @login_required
 def invoice_list(request):
     invoices = Invoice.objects.all()
@@ -36,6 +50,7 @@ def create_invoice(request):
     if request.method == 'POST':
         customer_id = request.POST.get('customer')
         customer = Customer.objects.get(id=customer_id)
+
         invoice = Invoice.objects.create(
             customer=customer,
             created_by=request.user,
@@ -76,7 +91,10 @@ def add_invoice_item(request, invoice_id):
         return redirect('invoice_list')
 
     flights = Flight.objects.all()
-    return render(request, 'add_invoice_item.html', {'invoice': invoice, 'flights': flights})
+    return render(request, 'add_invoice_item.html', {
+        'invoice': invoice,
+        'flights': flights
+    })
 
 
 # 4. Update invoice status (Accountant only)

@@ -1,7 +1,9 @@
-{% extends 'base.html' %}
+{% extends "base.html" %}
+
+{% block title %}No Permission{% endblock %}
 
 {% block content %}
-<div class="alert alert-danger">
-    <h4>You do not have permission to access this page.</h4>
-</div>
+<h1>No Permission</h1>
+<p class="message">You do not have permission to access this page.</p>
+<a href="{% url 'invoice_list' %}" class="btn">Go back</a>
 {% endblock %}

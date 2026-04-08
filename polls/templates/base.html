@@ -1,27 +1,102 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Airline Invoicing System</title>
+    <meta charset="UTF-8">
+    <title>{% block title %}Airline Invoicing{% endblock %}</title>
+    <style>
+        body { 
+            font-family: Arial; 
+            margin: 0; 
+            padding: 0; 
+            text-align: center; 
+        }
+        header { 
+            background: #222; 
+            color: white; 
+            padding: 10px; 
+            display: flex; 
+            justify-content: space-between; 
+            align-items: center;
+        }
+        nav a { 
+            color: white; 
+            margin-right: 10px; 
+            text-decoration: none; 
+            padding: 10px;
+        }
+        .right-side {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        .container { padding: 15px; }
+        h1 { margin-top: 0; }
+        table { 
+            width: 100%; 
+            border-collapse: collapse; 
+            margin-top: 10px; 
+            margin-bottom: 20px; 
+        }
+        th, td { 
+            border: 1px solid #ccc; 
+            padding: 6px; 
+        }
+        .btn { 
+            padding: 5px 10px; 
+            background: #222; 
+            color: white; 
+            text-decoration: none; 
+            margin-top: 15px; 
+        }
+    </style>
 </head>
 <body>
 
-<nav>
-    <a href="/">Invoices</a> |
-    <a href="/invoices/create/">Create Invoice</a> |
-    <a href="/reports/customer/">Customer Report</a> |
+<header>
+    <div>
+        <strong>Airline Invoicing System</strong>
+        <nav>
+            {% if user.is_authenticated %}
+
+                <!-- ADMIN  ACCESS -->
+                {% if user.username == "Admin" %}
+                    <a href="{% url 'invoice_list' %}">Home</a>
+                    <a href="{% url 'create_invoice' %}">Create Invoice</a>
+                    <a href="{% url 'invoice_list' %}">Update Status</a>
+                    <a href="{% url 'customer_report' %}">Reports</a>
+                {% else %}
+
+                    <!-- NORMAL ROLE MAVIGATION -->
+                    <a href="{% url 'invoice_list' %}">Home</a>
+
+                    {% if user.userprofile.role == "SalesAgent" %}
+                        <a href="{% url 'create_invoice' %}">Create Invoice</a>
+                    {% endif %}
+
+                    {% if user.userprofile.role == "Accountant" %}
+                        <a href="{% url 'invoice_list' %}">Update Status</a>
+                    {% endif %}
+
+                    {% if user.userprofile.role == "Manager" %}
+                        <a href="{% url 'customer_report' %}">Reports</a>
+                    {% endif %}
+
+                {% endif %}
+            {% endif %}
+        </nav>
+    </div>
 
     {% if user.is_authenticated %}
-        <a href="{% url 'logout' %}">Logout</a>
-        <p>Account: {{ user.username }}</p>
-    {% else %}
-        <a href="/login/">Login</a>
+    <div class="right-side">
+        <span>Logged in as: <strong>{{ user.username }}</strong></span>
+        <a href="{% url 'logout' %}" class="btn">Logout</a>
+    </div>
     {% endif %}
-</nav>
+</header>
 
-<hr>
-
-{% block content %}
-{% endblock %}
+<div class="container">
+    {% block content %}{% endblock %}
+</div>
 
 </body>
 </html>
