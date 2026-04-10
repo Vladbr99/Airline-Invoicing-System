@@ -6,15 +6,16 @@
 <form method="POST">
     {% csrf_token %}
 
-    <div class="mb-3">
-        <label>Status</label>
-        <select name="status" class="form-control">
+    <div>
+        <label>Status</label><br>
+        <select name="status">
             <option value="Pending">Pending</option>
-            <option value="Paid">Paid</option>
-            <option value="Cancelled">Cancelled</option>
+            <option value="Approved">Approved</option>
+            <option value="Rejected">Rejected</option>
         </select>
     </div>
 
-    <button class="btn btn-warning">Update</button>
+    <br>
+    <button class="btn">Update</button>
 </form>
 {% endblock %}

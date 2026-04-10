@@ -3,15 +3,24 @@
 {% block content %}
 <h2>Login</h2>
 
+<style>
+input { margin-bottom: 10px; }
+form { margin-top: 20px; }
+</style>
+
 <form method="post">
     {% csrf_token %}
-    <label>Username:</label><br>
-    <input type="text" name="username"><br><br>
+    <label>Username:</label>
+    <br>
+    <input type="text" name="username">
+    <br>
 
-    <label>Password:</label><br>
-    <input type="password" name="password"><br><br>
+    <label>Password:</label>
+    <br>
+    <input type="password" name="password">
+    <br>
 
-    <button type="submit">Login</button>
+    <button type="submit" class="btn">Login</button>
 </form>
 
 {% if error %}

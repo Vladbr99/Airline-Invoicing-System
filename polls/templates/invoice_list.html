@@ -3,6 +3,19 @@
 {% block content %}
 <h1>Invoices</h1>
 
+<style>
+.create-btn {
+    display: inline-block;
+    margin-top: 25px; 
+}
+.delete-x {
+    color: red;
+    font-weight: bold;
+    text-decoration: none;
+    margin-left: 10px;
+}
+</style>
+
 <table border="1" cellpadding="5">
     <tr>
         <th>ID</th>
@@ -18,13 +31,23 @@
         <td>{{ invoice.customer.name }}</td>
         <td>{{ invoice.status }}</td>
         <td>{{ invoice.total }}</td>
+        
         <td>
-            <a href="/invoices/{{ invoice.id }}/add-item/">Add Item</a> |
-            <a href="/invoices/{{ invoice.id }}/update-status/">Update Status</a>
+            {% if user.username == "Admin" or user.userprofile.role == "SalesAgent" %}
+                <a href="{% url 'add_invoice_item' invoice.id %}">Add Item</a> |
+            {% endif %}
+
+            {% if user.username == "Admin" or user.userprofile.role == "Accountant" %}
+                <a href="{% url 'update_invoice_status' invoice.id %}">Update Status</a> |
+            {% endif %}
+
+            {% if user.username == "Admin" or user.userprofile.role == "SalesAgent" %}
+                <a href="{% url 'delete_invoice' invoice.id %}" class="delete-x">X</a>
+            {% endif %}
         </td>
     </tr>
     {% endfor %}
 </table>
 
-<a href="{% url 'create_invoice' %}" class="btn btn-primary">Create New Invoice</a>
+<a href="{% url 'create_invoice' %}" class="btn create-btn">Create New Invoice</a>
 {% endblock %}

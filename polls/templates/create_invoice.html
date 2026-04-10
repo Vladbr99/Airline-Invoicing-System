@@ -3,6 +3,14 @@
 {% block content %}
 <h1>Create Invoice</h1>
 
+<style>
+select, input {
+     margin-top: 10px; 
+     margin-bottom: 10px; 
+     }
+     
+</style>
+
 <form method="POST">
     {% csrf_token %}
 
@@ -13,7 +21,7 @@
         {% endfor %}
     </select>
 
-    <br><br>
-    <button type="submit">Create Invoice</button>
+    <br>
+    <button type="submit" class="btn">Create Invoice</button>
 </form>
 {% endblock %}

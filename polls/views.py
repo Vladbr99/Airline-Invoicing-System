@@ -3,6 +3,7 @@ from django.contrib.auth.decorators import login_required
 from django.contrib.auth import authenticate, login
 from .models import Customer, Flight, Invoice, InvoiceItem, UserProfile
 from django.contrib.auth import logout
+from django.contrib import messages
 
 # Role helper
 def user_has_role(user, role_name):
@@ -21,6 +22,7 @@ def login_view(request):
 
         if user:
             login(request, user)
+            messages.success(request, "Login successful!")
             return redirect('invoice_list')
 
         return render(request, 'login.html', {'error': 'Invalid username or password'})
@@ -31,6 +33,7 @@ def login_view(request):
 @login_required
 def logout_view(request):
     logout(request)
+    messages.success(request, "You have been logged out.")
     return redirect('login')
 
 
@@ -57,6 +60,8 @@ def create_invoice(request):
             status="Pending",
             total=0
         )
+
+        messages.success(request, "Invoice created successfully!")
         return redirect('add_invoice_item', invoice_id=invoice.id)
 
     customers = Customer.objects.all()
@@ -88,6 +93,7 @@ def add_invoice_item(request, invoice_id):
         invoice.total += line_total
         invoice.save()
 
+        messages.success(request, "Item added to invoice!")
         return redirect('invoice_list')
 
     flights = Flight.objects.all()
@@ -109,6 +115,8 @@ def update_invoice_status(request, invoice_id):
         new_status = request.POST.get('status')
         invoice.status = new_status
         invoice.save()
+
+        messages.success(request, "Invoice status updated!")
         return redirect('invoice_list')
 
     return render(request, 'update_invoice_status.html', {'invoice': invoice})
@@ -127,7 +135,22 @@ def customer_report(request):
         customer_id = request.POST.get('customer')
         invoices = Invoice.objects.filter(customer_id=customer_id)
 
+        messages.success(request, "Report generated successfully!")
+
     return render(request, 'customer_report.html', {
         'customers': customers,
         'invoices': invoices
     })
+
+# 6. Delete invoice (Admin + SalesAgent only)
+@login_required
+def delete_invoice(request, invoice_id):
+    if not (request.user.username == "Admin" or user_has_role(request.user, "SalesAgent")):
+        return render(request, 'no_permission.html')
+
+    invoice = get_object_or_404(Invoice, id=invoice_id)
+    invoice.delete()
+
+    messages.success(request, "Invoice deleted successfully!")
+    return redirect('invoice_list')
+

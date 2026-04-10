@@ -3,6 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <title>{% block title %}Airline Invoicing{% endblock %}</title>
+
     <style>
         body { 
             font-family: Arial; 
@@ -30,23 +31,45 @@
             gap: 10px;
         }
         .container { padding: 15px; }
-        h1 { margin-top: 0; }
+        h1, h2 { margin-top: 0; }
+
         table { 
             width: 100%; 
             border-collapse: collapse; 
-            margin-top: 10px; 
-            margin-bottom: 20px; 
+            margin-top: 15px;
+        }
+        th {
+            background: #d1d1d1;
         }
         th, td { 
             border: 1px solid #ccc; 
-            padding: 6px; 
+            padding: 8px; 
         }
         .btn { 
-            padding: 5px 10px; 
+            padding: 6px 12px; 
             background: #222; 
             color: white; 
             text-decoration: none; 
-            margin-top: 15px; 
+            border: none;
+            cursor: pointer;
+        }
+        .btn:hover {
+            background: #444;
+        }
+        form { margin-top: 20px; }
+        input, select {
+            margin-top: 8px;
+            margin-bottom: 12px;
+        }
+        .success-message {
+            color: green;
+            margin-bottom: 15px;
+            font-weight: bold;
+        }
+        footer {
+            margin-top: 40px;
+            padding: 10px;
+            color: #9c9c9c;
         }
     </style>
 </head>
@@ -56,34 +79,14 @@
     <div>
         <strong>Airline Invoicing System</strong>
         <nav>
-            {% if user.is_authenticated %}
+        {% if user.is_authenticated %}
+            <a href="{% url 'invoice_list' %}">Home</a>
+            <a href="{% url 'create_invoice' %}">Create Invoice</a>
+            <a href="{% url 'invoice_list' %}">Update Status</a>
+            <a href="{% url 'customer_report' %}">Reports</a>
+        {% endif %}
+    </nav>
 
-                <!-- ADMIN  ACCESS -->
-                {% if user.username == "Admin" %}
-                    <a href="{% url 'invoice_list' %}">Home</a>
-                    <a href="{% url 'create_invoice' %}">Create Invoice</a>
-                    <a href="{% url 'invoice_list' %}">Update Status</a>
-                    <a href="{% url 'customer_report' %}">Reports</a>
-                {% else %}
-
-                    <!-- NORMAL ROLE MAVIGATION -->
-                    <a href="{% url 'invoice_list' %}">Home</a>
-
-                    {% if user.userprofile.role == "SalesAgent" %}
-                        <a href="{% url 'create_invoice' %}">Create Invoice</a>
-                    {% endif %}
-
-                    {% if user.userprofile.role == "Accountant" %}
-                        <a href="{% url 'invoice_list' %}">Update Status</a>
-                    {% endif %}
-
-                    {% if user.userprofile.role == "Manager" %}
-                        <a href="{% url 'customer_report' %}">Reports</a>
-                    {% endif %}
-
-                {% endif %}
-            {% endif %}
-        </nav>
     </div>
 
     {% if user.is_authenticated %}
@@ -94,9 +97,20 @@
     {% endif %}
 </header>
 
+
 <div class="container">
+    {% if messages %}
+        {% for message in messages %}
+            <p class="success-message">{{ message }}</p>
+        {% endfor %}
+    {% endif %}
+
     {% block content %}{% endblock %}
 </div>
+
+<footer>
+    Airline Invoicing System — Web Frameworks Project
+</footer>
 
 </body>
 </html>
