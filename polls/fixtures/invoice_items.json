@@ -1,0 +1,12 @@
+[
+  {
+    "model": "polls.invoiceitem",
+    "pk": 1,
+    "fields": {
+      "invoice": 8,
+      "flight": 2,
+      "quantity": 1,
+      "line_total": "49.99"
+    }
+  }
+]

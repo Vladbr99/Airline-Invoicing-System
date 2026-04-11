@@ -1,0 +1,68 @@
+[
+  {
+    "model": "polls.invoice",
+    "pk": 3,
+    "fields": {
+      "customer": 5,
+      "created_by": 2,
+      "date": "2024-01-01",
+      "status": "Rejected",
+      "total": "94.98"
+    }
+  },
+  {
+    "model": "polls.invoice",
+    "pk": 4,
+    "fields": {
+      "customer": 7,
+      "created_by": 2,
+      "date": "2024-01-01",
+      "status": "Pending",
+      "total": "49.99"
+    }
+  },
+  {
+    "model": "polls.invoice",
+    "pk": 6,
+    "fields": {
+      "customer": 5,
+      "created_by": 1,
+      "date": "2024-01-01",
+      "status": "Rejected",
+      "total": "19.99"
+    }
+  },
+  {
+    "model": "polls.invoice",
+    "pk": 7,
+    "fields": {
+      "customer": 5,
+      "created_by": 1,
+      "date": "2024-01-01",
+      "status": "Pending",
+      "total": "0.00"
+    }
+  },
+  {
+    "model": "polls.invoice",
+    "pk": 8,
+    "fields": {
+      "customer": 5,
+      "created_by": 2,
+      "date": "2024-01-01",
+      "status": "Pending",
+      "total": "49.99"
+    }
+  },
+   {
+    "model": "polls.invoice",
+    "pk": 9,
+    "fields": {
+      "customer": 3,
+      "created_by": 2,
+      "date": "2024-01-01",
+      "status": "Pending",
+      "total": "60.99"
+    }
+  }
+]

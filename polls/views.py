@@ -5,7 +5,6 @@ from .models import Customer, Flight, Invoice, InvoiceItem, UserProfile
 from django.contrib.auth import logout
 from django.contrib import messages
 
-# Role helper
 def user_has_role(user, role_name):
     # Admin override
     if user.username == "Admin":

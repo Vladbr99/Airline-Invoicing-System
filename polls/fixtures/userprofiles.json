@@ -1,0 +1,34 @@
+[
+  {
+    "model": "polls.userprofile",
+    "pk": 1,
+    "fields": {
+      "user": 1,
+      "role": "Manager"
+    }
+  },
+  {
+    "model": "polls.userprofile",
+    "pk": 2,
+    "fields": {
+      "user": 2,
+      "role": "SalesAgent"
+    }
+  },
+  {
+    "model": "polls.userprofile",
+    "pk": 3,
+    "fields": {
+      "user": 3,
+      "role": "Accountant"
+    }
+  },
+  {
+    "model": "polls.userprofile",
+    "pk": 4,
+    "fields": {
+      "user": 4,
+      "role": "Manager"
+    }
+  }
+]

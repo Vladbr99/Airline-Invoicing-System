@@ -1,0 +1,35 @@
+[
+  {
+    "model": "polls.flight",
+    "pk": 1,
+    "fields": {
+      "flight_number": "FR4562",
+      "origin": "Dublin (DUB)",
+      "destination": "London (STN)",
+      "departure_time": "2026-04-06T10:00:00Z",
+      "base_price": "19.99"
+    }
+  },
+  {
+    "model": "polls.flight",
+    "pk": 2,
+    "fields": {
+      "flight_number": "FR7092",
+      "origin": "Dublin (DUB)",
+      "destination": "Berlin (BER)",
+      "departure_time": "2026-04-06T14:00:00Z",
+      "base_price": "49.99"
+    }
+  },
+  {
+    "model": "polls.flight",
+    "pk": 3,
+    "fields": {
+      "flight_number": "FR1542",
+      "origin": "Dublin (DUB)",
+      "destination": "Venice (VNC)",
+      "departure_time": "2026-04-06T19:55:00Z",
+      "base_price": "25.00"
+    }
+  }
+]

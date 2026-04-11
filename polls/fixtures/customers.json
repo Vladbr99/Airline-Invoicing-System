@@ -1,0 +1,58 @@
+[
+  {
+    "model": "polls.customer",
+    "pk": 1,
+    "fields": {
+      "name": "Jamie Mitchell",
+      "email": "jamie@gmail.com"
+    }
+  },
+  {
+    "model": "polls.customer",
+    "pk": 2,
+    "fields": {
+      "name": "Jack Curtis",
+      "email": "jack@gmail.com"
+    }
+  },
+  {
+    "model": "polls.customer",
+    "pk": 3,
+    "fields": {
+      "name": "Laura Colm",
+      "email": "laura@gmail.com"
+    }
+  },
+  {
+    "model": "polls.customer",
+    "pk": 4,
+    "fields": {
+      "name": "Jake Murphy",
+      "email": "jake@gmail.com"
+    }
+  },
+  {
+    "model": "polls.customer",
+    "pk": 5,
+    "fields": {
+      "name": "Reece James",
+      "email": "reece@gmail.com"
+    }
+  },
+  {
+    "model": "polls.customer",
+    "pk": 6,
+    "fields": {
+      "name": "Vlad Brykaylo",
+      "email": "vlad@gmail.com"
+    }
+  },
+  {
+    "model": "polls.customer",
+    "pk": 7,
+    "fields": {
+      "name": "Katie Murphy",
+      "email": "katie@gmail.com"
+    }
+  }
+]
