@@ -115,3 +115,46 @@ class InvoiceTests(BaseTestCase):
         response = self.client.get(reverse("delete_invoice", args=[self.invoice.id]))
         self.assertEqual(response.status_code, 302)
         self.assertFalse(Invoice.objects.filter(id=self.invoice.id).exists())
+
+# USE CASE TEST
+class UseCaseTests(BaseTestCase):
+    def test_sales_agent_full_workflow(self):
+        """SalesAgent logs in → creates invoice → adds item → total updates"""
+        self.client.login(username="sales", password="testpass123")
+
+        # Create invoice
+        response = self.client.post(reverse("create_invoice"), {
+            "customer": self.customer.id
+        })
+        self.assertEqual(response.status_code, 302)
+
+        invoice = Invoice.objects.last()
+
+        # Add item
+        response = self.client.post(reverse("add_invoice_item", args=[invoice.id]), {
+            "flight": self.flight.id,
+            "quantity": 2
+        })
+        self.assertEqual(response.status_code, 302)
+
+        invoice.refresh_from_db()
+        self.assertEqual(invoice.total, 200)
+
+    def test_accountant_updates_invoice_status(self):
+        """Accountant logs in → opens invoice → updates status"""
+        self.client.login(username="acc", password="testpass123")
+
+        response = self.client.post(reverse("update_invoice_status", args=[self.invoice.id]), {
+            "status": "Approved"
+        })
+        self.assertEqual(response.status_code, 302)
+
+        self.invoice.refresh_from_db()
+        self.assertEqual(self.invoice.status, "Approved")
+
+    def test_manager_views_customer_report(self):
+        """Manager logs in → opens customer report page"""
+        self.client.login(username="mgr", password="testpass123")
+
+        response = self.client.get(reverse("customer_report"))
+        self.assertEqual(response.status_code, 200)

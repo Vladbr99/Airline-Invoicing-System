@@ -3,7 +3,27 @@
 {% block content %}
 <h2>Add Item to Invoice #{{ invoice.id }}</h2>
 
-<form method="POST">
+<div style="margin-bottom:20px; padding:15px; background:#f4f4f4; border-radius:6px; width:40%; margin:auto;">
+    <h3>Current Invoice Details</h3>
+    <p><strong>Customer:</strong> {{ invoice.customer.name }}</p>
+    <p><strong>Status:</strong> {{ invoice.status }}</p>
+    <p><strong>Total:</strong> €{{ invoice.total }}</p>
+
+    <h4>Existing Items:</h4>
+    {% if invoice.invoiceitem_set.all %}
+        <ul style="list-style:none; padding:0;">
+            {% for item in invoice.invoiceitem_set.all %}
+                <li style="padding:6px 0; border-bottom:1px solid #ddd;">
+                    {{ item.flight.flight_number }}: <br>
+                    {{ item.flight.origin }} → {{ item.flight.destination }}
+                    (x{{ item.quantity }}) — €{{ item.line_total }}
+                </li>
+            {% endfor %}
+        </ul>
+    {% endif %}
+</div>
+
+<form method="POST" style="margin-top:25px;">
     {% csrf_token %}
 
     <div>

@@ -84,6 +84,16 @@
 .create-btn:hover {
     background: #444;
 }
+.status-badge {
+    padding: 5px 10px;
+    border-radius: 4px;
+    color: white;
+    font-weight: bold;
+    font-size: 13px;
+}
+.status-pending { background: #ffcc00; color:black; }
+.status-approved { background: #28a745; }
+.status-rejected { background: #d90000d8; }
 </style>
 
 <div class="table-wrapper">
@@ -103,13 +113,23 @@
     <tr>
         <td>{{ invoice.id }}</td>
         <td>{{ invoice.customer.name }}</td>
-        <td>{{ invoice.status }}</td>
+
+        <td>
+            {% if invoice.status == "Pending" %}
+                <span class="status-badge status-pending">Pending</span>
+            {% elif invoice.status == "Approved" %}
+                <span class="status-badge status-approved">Approved</span>
+            {% else %}
+                <span class="status-badge status-rejected">{{ invoice.status }}</span>
+            {% endif %}
+        </td>
+
         <td>€{{ invoice.total }}</td>
 
         {% if user.username == "Admin" or user.userprofile.role != "Manager" %}
         <td>
             {% if user.username == "Admin" or user.userprofile.role == "SalesAgent" %}
-                <a href="{% url 'add_invoice_item' invoice.id %}" class="action-link">Add Item</a> |
+                <a href="{% url 'add_invoice_item' invoice.id %}" class="action-link">Add Flight✈️</a> |
             {% endif %}
 
             {% if user.username == "Admin" or user.userprofile.role == "Accountant" %}

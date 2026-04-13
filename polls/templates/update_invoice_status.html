@@ -3,15 +3,37 @@
 {% block content %}
 <h2>Update Invoice Status</h2>
 
+<!-- INVOICE SUMMARY -->
+<div style="margin-bottom:20px; padding:15px; background:#f4f4f4; border-radius:6px; width:60%; margin:auto;">
+    <h3>Invoice #{{ invoice.id }}</h3>
+    <p><strong>Customer:</strong> {{ invoice.customer.name }}</p>
+    <p><strong>Current Status:</strong> {{ invoice.status }}</p>
+    <p><strong>Total:</strong> €{{ invoice.total }}</p>
+
+    <h4>Items:</h4>
+    {% if invoice.invoiceitem_set.all %}
+        <ul style="list-style:none; padding:0;">
+            {% for item in invoice.invoiceitem_set.all %}
+                <li style="padding:6px 0; border-bottom:1px solid #ddd;">
+                    {{ item.flight.flight_number }} — {{ item.flight.origin }} → {{ item.flight.destination }}
+                    (x{{ item.quantity }}) — €{{ item.line_total }}
+                </li>
+            {% endfor %}
+        </ul>
+    {% else %}
+        <p>No items added.</p>
+    {% endif %}
+</div>
+
 <form method="POST">
     {% csrf_token %}
 
     <div>
         <label>Status</label><br>
         <select name="status">
-            <option value="Pending">Pending</option>
-            <option value="Approved">Approved</option>
-            <option value="Rejected">Rejected</option>
+            <option value="Pending" {% if invoice.status == "Pending" %}selected{% endif %}>Pending</option>
+            <option value="Approved" {% if invoice.status == "Approved" %}selected{% endif %}>Approved</option>
+            <option value="Rejected" {% if invoice.status == "Rejected" %}selected{% endif %}>Rejected</option>
         </select>
     </div>
 

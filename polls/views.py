@@ -141,7 +141,7 @@ def customer_report(request):
         'invoices': invoices
     })
 
-# 6. Delete invoice (Admin + SalesAgent only)
+# Delete invoice (Admin + SalesAgent only)
 @login_required
 def delete_invoice(request, invoice_id):
     if not (request.user.username == "Admin" or user_has_role(request.user, "SalesAgent")):

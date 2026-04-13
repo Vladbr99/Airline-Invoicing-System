@@ -1,3 +1,4 @@
+{% load static %}
 <!DOCTYPE html>
 <html>
 <head>
@@ -19,16 +20,23 @@
             justify-content: space-between; 
             align-items: center;
         }
-        nav a { 
-            color: white; 
-            margin-right: 10px; 
-            text-decoration: none; 
-            padding: 10px;
+        nav a {
+            color: white;
+            background: #2e2e2e;
+            padding: 8px 14px;
+            border-radius: 4px;
+            margin-right: 8px;
+            display: inline-block;
+            text-decoration: none;
+        }
+        nav a:hover {
+            background: #585858;
         }
         .right-side {
             display: flex;
             align-items: center;
             gap: 10px;
+            border-radius: 4px;
         }
         .container { padding: 15px; }
         h1, h2 { margin-top: 0; }
@@ -47,14 +55,15 @@
         }
         .btn { 
             padding: 6px 12px; 
-            background: #222; 
+            background: #2e2e2e; 
             color: white; 
             text-decoration: none; 
             border: none;
             cursor: pointer;
+            border-radius: 4px;
         }
         .btn:hover {
-            background: #444;
+            background: #585858;
         }
         form { margin-top: 20px; }
         input, select {
@@ -76,12 +85,15 @@
 <body>
 
 <header>
-    <div>
-        <strong>Airline Invoicing System</strong>
+    <div style="display:flex; align-items:center; gap:20px;">
+        <a href="{% url 'invoice_list' %}">
+            <img src="{% static 'polls/images/airline.logo.png' %}" 
+                 alt="Airline Logo" 
+                 style="height:50px; width:auto;">
+        </a>
         <nav>
             {% if user.is_authenticated %}
 
-                <!-- ADMIN  ACCESS -->
                 {% if user.username == "Admin" %}
                     <a href="{% url 'invoice_list' %}">Home</a>
                     <a href="{% url 'create_invoice' %}">Create Invoice</a>
@@ -89,7 +101,6 @@
                     <a href="{% url 'customer_report' %}">Reports</a>
                 {% else %}
 
-                    <!-- NORMAL ROLE MAVIGATION -->
                     <a href="{% url 'invoice_list' %}">Home</a>
 
                     {% if user.userprofile.role == "SalesAgent" %}
