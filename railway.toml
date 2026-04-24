@@ -1,0 +1,5 @@
+[build]
+builder = "NIXPACKS"
+
+[start]
+cmd = "gunicorn airline_invoicing_project.wsgi:application"
